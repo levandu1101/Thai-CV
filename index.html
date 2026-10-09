@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ĐƠN XIN VIỆC - NGUYỄN THANH THÁI</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #172554;
+            --accent: #2563eb;
+            --bg-page: #f1f5f9;
+            --bg-card: #ffffff;
+            --border-color: #333333;
+            --text-main: #111827;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif, 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.4;
+            font-size: 14px;
+            padding-bottom: 60px;
+        }
+
+        /* Action Toolbar */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #fff;
+            padding: 12px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .toolbar-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .badge-recipient {
+            background: #0284c7;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toolbar-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .btn-secondary {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #334155;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #94a3b8;
+            color: #f1f5f9;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Document Container */
+        .paper-wrapper {
+            max-width: 900px;
+            margin: 25px auto;
+            background: var(--bg-card);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 35px 40px;
+            border-radius: 4px;
+        }
+
+        /* Document Header */
+        .doc-header {
+            display: grid;
+            grid-template-columns: 140px 1fr 140px;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+        }
+
+        .header-logo img {
+            max-width: 130px;
+            height: auto;
+            display: block;
+        }
+
+        .header-title-box {
+            text-align: center;
+        }
+
+        .header-title-box h1 {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .header-title-box .subtitle {
+            font-style: italic;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .header-photo-box {
+            width: 120px;
+            height: 160px;
+            border: 1.5px solid #272727;
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #fafafa;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .header-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-photo-box .photo-placeholder {
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+            padding: 5px;
+        }
+
+        .photo-upload-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 10px;
+            padding: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            text-align: center;
+            font-family: sans-serif;
+        }
+        .header-photo-box:hover .photo-upload-overlay {
+            opacity: 1;
+        }
+
+        /* Form Tables Styling */
+        .form-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            border: 1.5px solid var(--border-color);
+        }
+
+        .form-table td, .form-table th {
+            border: 1px solid var(--border-color);
+            padding: 6px 8px;
+            vertical-align: middle;
+            font-size: 13.5px;
+        }
+
+        .section-header-cell {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 8px !important;
+            border-top: 1.5px solid var(--border-color) !important;
+            border-bottom: 1.5px solid var(--border-color) !important;
+            text-transform: uppercase;
+        }
+
+        .sub-header-cell {
+            background-color: #f8fafc;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* Input Controls */
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 1px dotted #888;
+            background: transparent;
+            font-family: 'Times New Roman', serif;
+            font-size: 13.5px;
+            color: #0f172a;
+            padding: 2px 4px;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+            border-bottom: 1px solid #2563eb;
+            background-color: #eff6ff;
+        }
+
+        textarea {
+            resize: vertical;
+            border: 1px dotted #888;
+            border-radius: 2px;
+            padding: 4px;
+            min-height: 50px;
+        }
+
+        .inline-field {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .inline-input {
+            border: none !important;
+            border-bottom: 1px dotted #555 !important;
+            padding: 0 4px !important;
+            height: 22px;
+        }
+
+        /* Checkbox & Radio Labels */
+        .check-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 18px;
+            align-items: center;
+        }
+
+        .check-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .check-item input[type="checkbox"], .check-item input[type="radio"] {
+            cursor: pointer;
+            width: 15px;
+            height: 15px;
+            accent-color: #1e3a8a;
+        }
+
+        /* Language Grid */
+        .table-lang th {
+            text-align: center;
+            font-size: 12.5px;
+            background: #f8fafc;
+        }
+        .table-lang td {
+            text-align: center;
+        }
+        .table-lang td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* Commitment & Signature */
+        .commitment-text {
+            text-align: justify;
+            line-height: 1.5;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .signature-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .canvas-container {
+            width: 260px;
+            height: 100px;
+            border: 1px dashed #94a3b8;
+            border-radius: 4px;
+            margin: 8px 0;
+            background: #fafafa;
+            position: relative;
+        }
+
+        .canvas-container canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .canvas-tools {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-xs {
+            font-size: 11px;
+            padding: 2px 8px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Submission Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 12px;
+            max-width: 580px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            font-family: system-ui, -apple-system, sans-serif;
+            animation: modalIn 0.25s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: #1e3a8a;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .send-method-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            transition: all 0.2s ease;
+        }
+        .send-method-card:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+
+        .method-info h4 {
+            font-size: 14px;
+            color: #0f172a;
+            margin-bottom: 3px;
+        }
+
+        .method-info p {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .status-alert {
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .status-alert.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+            display: block;
+        }
+        .status-alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+                font-size: 12pt;
+                color: #000;
+            }
+            .toolbar, .modal-overlay, .photo-upload-overlay, .canvas-tools {
+                display: none !important;
+            }
+            .paper-wrapper {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .form-table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            input[type="text"], input[type="email"], input[type="tel"], textarea {
+                border-bottom: 1px solid #666 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .paper-wrapper {
+                padding: 15px 12px;
+                margin: 10px;
+            }
+            .doc-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .header-photo-box {
+                margin: 10px auto;
+            }
+            .signature-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY ACTION BAR -->
+    <header class="toolbar">
+        <div class="toolbar-info">
+            <span class="badge-recipient">✉️ levandu1101@gmail.com</span>
+            <span class="toolbar-title">Hồ sơ: <strong>NGUYỄN THANH THÁI</strong> (Đã điền sẵn từ dữ liệu)</span>
+        </div>
+        <div class="toolbar-actions">
+            <button type="button" class="btn btn-outline" onclick="resetFormToBlank()" title="Xóa dữ liệu để điền mới từ đầu">🔄 Form Trống</button>
+            <button type="button" class="btn btn-outline" onclick="loadPrefilledData()" title="Khôi phục thông tin có sẵn">📋 Nạp lại mẫu</button>
+            <button type="button" class="btn btn-secondary" onclick="exportFilledHTML()" title="Tải file HTML đã điền">💾 Tải HTML</button>
+            <button type="button" class="btn btn-secondary" onclick="window.print()" title="In hoặc lưu dạng PDF">🖨️ In / PDF</button>
+            <button type="button" class="btn btn-primary" onclick="openSubmitModal()">🚀 Nộp Đơn (Gửi Email)</button>
+        </div>
+    </header>
+
+    <!-- FORM WRAPPER -->
+    <main class="paper-wrapper">
+        <form id="jobApplicationForm" onsubmit="event.preventDefault(); openSubmitModal();">
+
+            <!-- HEADER -->
+            <div class="doc-header">
+                <div class="header-logo">
+                    <img src="data:image/jpeg;base64,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" alt="Havimec Logo" id="docLogo">
+                </div>
+                <div class="header-title-box">
+                    <h1>ĐƠN XIN VIỆC</h1>
+                    <div class="subtitle">(viết rõ bằng chữ in Hoa)</div>
+                </div>
+                <div class="header-photo-box" id="photoBox">
+                    <img src="data:image/png;base64,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" alt="Ảnh chân dung 4x6" id="applicantPhoto">
+                    <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
+                    <div class="photo-upload-overlay" onclick="document.getElementById('photoFileInput').click()">
+                        📷 Đổi ảnh 4x6
+                    </div>
+                </div>
+            </div>
+
+            <!-- MỤC 1: BẠN BIẾT ĐỢT TUYỂN DỤNG NÀY THÔNG QUA -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="4">
+                        1. BẠN BIẾT ĐỢT TUYỂN DỤNG NÀY THÔNG QUA (đánh dấu X)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 22%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="recruit_source" value="Báo chí"> Báo chí
+                        </label>
+                    </td>
+                    <td style="width: 25%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="recruit_source" value="Mạng xã hội" checked> Mạng xã hội
+                        </label>
+                    </td>
+                    <td style="width: 25%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="recruit_source" value="Bạn giới thiệu"> Bạn giới thiệu
+                        </label>
+                    </td>
+                    <td style="width: 28%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <label class="check-item">
+                                <input type="checkbox" name="recruit_source" value="Khác"> Khác:
+                            </label>
+                            <input type="text" name="recruit_source_other" placeholder="..................................." class="inline-input">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- MỤC 2: NỘP HỒ SƠ VÀO VỊ TRÍ -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="4">
+                        2. NỘP HỒ SƠ VÀO VỊ TRÍ (đánh dấu X)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Lễ tân"> Lễ tân <span style="font-size: 11.5px; color: #555;">(nữ trên 1.65m)</span>
+                        </label>
+                    </td>
+                    <td style="width: 28%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Nhân viên hành lý"> Nhân viên hành lý <span style="font-size: 11.5px; color: #555;">(nam trên 1.75m)</span>
+                        </label>
+                    </td>
+                    <td style="width: 24%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Phục vụ nhà hàng" checked> <strong>Phục vụ nhà hàng</strong>
+                        </label>
+                    </td>
+                    <td style="width: 23%;">
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Bếp"> Bếp
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Tạp vụ bếp"> Tạp vụ bếp
+                        </label>
+                    </td>
+                    <td>
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Pha chế rượu"> Pha chế rượu <span style="font-size: 11px; color: #555;">(Cần kinh nghiệm)</span>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Vệ sinh phòng khách"> Vệ sinh phòng khách
+                        </label>
+                    </td>
+                    <td>
+                        <label class="check-item">
+                            <input type="checkbox" name="applied_position" value="Vệ sinh tạp vụ"> Vệ sinh tạp vụ
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="inline-field" style="width: 100%;">
+                            <label class="check-item">
+                                <input type="checkbox" name="applied_position" value="Khác"> Khác:
+                            </label>
+                            <input type="text" name="applied_position_other" value="Trưởng ca nhà hàng / Senior F&B Attendant / Housekeeping" class="inline-input">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- MỤC 3: THÔNG TIN CÁ NHÂN -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="4">
+                        3. THÔNG TIN CÁ NHÂN
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="width: 60%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Họ và tên:</strong></span>
+                            <input type="text" name="full_name" value="NGUYỄN THANH THÁI" style="font-weight: bold; text-transform: uppercase;">
+                        </div>
+                    </td>
+                    <td colspan="2" style="width: 40%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Họ và tên tiếng Hoa:</strong></span>
+                            <input type="text" name="chinese_name" value="阮成泰">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%;">
+                        <span><strong>Giới tính:</strong></span> &nbsp;
+                        <label class="check-item" style="display: inline-flex;"><input type="radio" name="gender" value="Nam" checked> Nam</label> &nbsp;
+                        <label class="check-item" style="display: inline-flex;"><input type="radio" name="gender" value="Nữ"> Nữ</label>
+                    </td>
+                    <td style="width: 25%;">
+                        <div class="inline-field">
+                            <span><strong>Sinh ngày:</strong></span>
+                            <input type="text" name="dob" value="10 / 12 / 1988" style="text-align: center; width: 110px;">
+                        </div>
+                    </td>
+                    <td style="width: 25%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Nơi sinh:</strong></span>
+                            <input type="text" name="pob" value="Châu Thành, Tiền Giang">
+                        </div>
+                    </td>
+                    <td style="width: 25%;">
+                        <div class="inline-field">
+                            <span><strong>Chiều cao:</strong> 1m</span>
+                            <input type="text" name="height_cm" value="69" style="width: 35px; text-align: center;">
+                            <span>cm</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="check-group">
+                            <span><strong>Tình trạng hôn nhân:</strong></span>
+                            <label class="check-item"><input type="radio" name="marital_status" value="Độc thân" checked> Độc thân</label>
+                            <label class="check-item"><input type="radio" name="marital_status" value="Đã kết hôn"> Đã kết hôn</label>
+                            <label class="check-item"><input type="radio" name="marital_status" value="Li thân"> Li thân</label>
+                            <label class="check-item"><input type="radio" name="marital_status" value="Li dị"> Li dị</label>
+                            <label class="check-item"><input type="radio" name="marital_status" value="Ở góa"> Ở góa</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="inline-field">
+                            <span><strong>Cân nặng:</strong></span>
+                            <input type="text" name="weight_kg" value="78" style="width: 45px; text-align: center;">
+                            <span>kg</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 33%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span><strong>Quốc tịch:</strong></span>
+                            <input type="text" name="nationality" value="Việt Nam">
+                        </div>
+                    </td>
+                    <td style="width: 33%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span><strong>Dân tộc:</strong></span>
+                            <input type="text" name="ethnicity" value="Kinh">
+                        </div>
+                    </td>
+                    <td colspan="2" style="width: 34%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span><strong>Tôn giáo:</strong></span>
+                            <input type="text" name="religion" value="Không">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span><strong>Có hình xăm không?</strong></span> &nbsp;
+                        <label class="check-item" style="display: inline-flex;"><input type="radio" name="has_tattoo" value="Có" checked> Có</label> &nbsp;
+                        <label class="check-item" style="display: inline-flex;"><input type="radio" name="has_tattoo" value="Không"> Không</label>
+                    </td>
+                    <td colspan="2">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Nếu có, vị trí hình xăm:</strong></span>
+                            <input type="text" name="tattoo_details" value="Vị trí kín đáo (không lộ khi mặc áo ngắn tay hoặc quần lửng)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Có tiền sử bệnh hay cơ thể có khuyết tật nào không?</strong></span>
+                            <input type="text" name="health_disability" value="Không có (Sức khỏe tốt)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 10px;">
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Số passport:</strong></span>
+                                <input type="text" name="passport_number" value="E01983320">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Ngày cấp:</strong></span>
+                                <input type="text" name="passport_issue_date" value="06 / 06 / 2024">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Ngày hết hạn:</strong></span>
+                                <input type="text" name="passport_expiry_date" value="06 / 06 / 2034">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Nơi cấp:</strong></span>
+                                <input type="text" name="passport_issue_place" value="Cục Quản lý Xuất nhập cảnh">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr 1.8fr; gap: 10px;">
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Số CMND / CCCD:</strong></span>
+                                <input type="text" name="id_card_number" value="082088016955">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Ngày cấp:</strong></span>
+                                <input type="text" name="id_card_issue_date" value="10 / 12 / 2021">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Nơi cấp:</strong></span>
+                                <input type="text" name="id_card_issue_place" value="Cục Cảnh sát QLHC về TTXH">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%;"><strong>Địa chỉ thường trú:</strong></td>
+                    <td colspan="3">
+                        <input type="text" name="permanent_address" value="Số 13, Ấp Vĩnh Hòa, Xã Vĩnh Kim, Huyện Châu Thành, Tỉnh Tiền Giang (Mã bưu chính: 870000)">
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Địa chỉ liên hệ:</strong></td>
+                    <td colspan="3">
+                        <input type="text" name="contact_address" value="110/13 Đường Trường Sa, Phường Gia Định, TP. Hồ Chí Minh">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Điện thoại nhà:</strong></span>
+                                <input type="tel" name="home_phone" placeholder="................................">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Di động:</strong></span>
+                                <input type="tel" name="mobile_phone" value="0848853959" style="font-weight: 600;">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Facebook:</strong></span>
+                                <input type="text" name="facebook" placeholder="................................">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px;">
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Email:</strong></span>
+                                <input type="email" name="email" value="ryann1696@gmail.com" style="font-weight: 600;">
+                            </div>
+                            <div class="inline-field">
+                                <span style="white-space: nowrap;"><strong>Instagram:</strong></span>
+                                <input type="text" name="instagram" placeholder="................................">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- MỤC 4: LIÊN HỆ TRONG TRƯỜNG HỢP KHẨN CẤP -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="4">
+                        4. LIÊN HỆ TRONG TRƯỜNG HỢP KHẨN CẤP
+                    </td>
+                </tr>
+                <tr class="sub-header-cell" style="text-align: center;">
+                    <td style="width: 18%;">Mối quan hệ</td>
+                    <td style="width: 25%;">Họ tên đầy đủ</td>
+                    <td style="width: 37%;">Địa chỉ</td>
+                    <td style="width: 20%;">Điện thoại</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="check-item"><input type="checkbox" name="emergency_rel_1" value="Cha"> Cha</label>
+                    </td>
+                    <td><input type="text" name="emergency_name_1" placeholder="Họ và tên cha"></td>
+                    <td><input type="text" name="emergency_address_1" placeholder="Địa chỉ thường trú"></td>
+                    <td><input type="tel" name="emergency_phone_1" placeholder="Số điện thoại"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="check-item"><input type="checkbox" name="emergency_rel_2" value="Mẹ"> Mẹ</label>
+                    </td>
+                    <td><input type="text" name="emergency_name_2" placeholder="Họ và tên mẹ"></td>
+                    <td><input type="text" name="emergency_address_2" placeholder="Địa chỉ thường trú"></td>
+                    <td><input type="tel" name="emergency_phone_2" placeholder="Số điện thoại"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="check-item"><input type="checkbox" name="emergency_rel_3" value="Vợ/Chồng"> Vợ / Chồng</label>
+                    </td>
+                    <td><input type="text" name="emergency_name_3" placeholder="(Độc thân)"></td>
+                    <td><input type="text" name="emergency_address_3"></td>
+                    <td><input type="tel" name="emergency_phone_3"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field">
+                            <label class="check-item"><input type="checkbox" name="emergency_rel_4" value="Khác" checked> Khác:</label>
+                            <input type="text" name="emergency_rel_other_desc" value="Bạn bè" style="width: 50px;">
+                        </div>
+                    </td>
+                    <td><input type="text" name="emergency_name_4" value="LÊ VĂN DU" style="font-weight: bold;"></td>
+                    <td><input type="text" name="emergency_address_4" value="110/13 Đường Trường Sa, Phường Gia Định, TP. Hồ Chí Minh"></td>
+                    <td><input type="tel" name="emergency_phone_4" value="0772113087" style="font-weight: 600;"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="background-color: #f8fafc; font-weight: 600; padding: 6px 8px;">
+                        <label class="check-item">
+                            <input type="checkbox" name="has_ref_friends" checked> Giới thiệu 3 người bạn biết tiếng Hoa hoặc tiếng Anh:
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Người 1 (Tiếng Anh)</td>
+                    <td><input type="text" name="ref_friend_name_1" value="LÊ VĂN DU" style="font-weight: 600;"></td>
+                    <td><input type="text" name="ref_friend_address_1" value="110/13 Đường Trường Sa, Phường Gia Định, TP. Hồ Chí Minh"></td>
+                    <td><input type="tel" name="ref_friend_phone_1" value="0772113087"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Người 2</td>
+                    <td><input type="text" name="ref_friend_name_2" placeholder="Họ và tên"></td>
+                    <td><input type="text" name="ref_friend_address_2" placeholder="Địa chỉ liên hệ"></td>
+                    <td><input type="tel" name="ref_friend_phone_2" placeholder="Số điện thoại"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Người 3</td>
+                    <td><input type="text" name="ref_friend_name_3" placeholder="Họ và tên"></td>
+                    <td><input type="text" name="ref_friend_address_3" placeholder="Địa chỉ liên hệ"></td>
+                    <td><input type="tel" name="ref_friend_phone_3" placeholder="Số điện thoại"></td>
+                </tr>
+            </table>
+
+            <!-- MỤC 5: QUÁ TRÌNH HỌC TẬP -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="5">
+                        5. QUÁ TRÌNH HỌC TẬP (Ghi học vấn cao nhất)
+                    </td>
+                </tr>
+                <tr class="sub-header-cell" style="text-align: center;">
+                    <td style="width: 32%;">Tên trường</td>
+                    <td style="width: 12%;">Từ năm</td>
+                    <td style="width: 12%;">Đến năm</td>
+                    <td style="width: 24%;">Chuyên ngành học</td>
+                    <td style="width: 20%;">Bằng cấp</td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="edu_school_1" value="Trường THPT Rạch Gầm Xoài Mút"></td>
+                    <td><input type="text" name="edu_from_1" value="2005" style="text-align: center;"></td>
+                    <td><input type="text" name="edu_to_1" value="2009" style="text-align: center;"></td>
+                    <td><input type="text" name="edu_major_1" value="Giáo dục phổ thông"></td>
+                    <td><input type="text" name="edu_degree_1" value="Bằng Tốt nghiệp THPT"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="edu_school_2" value="Trường Du lịch & Khách sạn Saigontourist"></td>
+                    <td><input type="text" name="edu_from_2" value="2009" style="text-align: center;"></td>
+                    <td><input type="text" name="edu_to_2" value="2011" style="text-align: center;"></td>
+                    <td><input type="text" name="edu_major_2" value="Nghiệp vụ Du lịch & Khách sạn"></td>
+                    <td><input type="text" name="edu_degree_2" value="Chứng chỉ / Bằng nghề F&B"></td>
+                </tr>
+            </table>
+
+            <!-- MỤC 6: KHẢ NĂNG NGOẠI NGỮ -->
+            <table class="form-table table-lang">
+                <tr>
+                    <td class="section-header-cell" colspan="10" style="text-align: left;">
+                        6. KHẢ NĂNG NGOẠI NGỮ (đánh dấu X)
+                    </td>
+                </tr>
+                <tr>
+                    <th rowspan="2" style="width: 22%;">Ngoại ngữ</th>
+                    <th colspan="3" style="width: 26%;">Kỹ năng nghe nói</th>
+                    <th colspan="3" style="width: 26%;">Kỹ năng đọc</th>
+                    <th colspan="3" style="width: 26%;">Kỹ năng viết</th>
+                </tr>
+                <tr>
+                    <th style="width: 8.6%;">Yếu</th>
+                    <th style="width: 8.6%;">TB</th>
+                    <th style="width: 8.6%;">Giỏi</th>
+                    <th style="width: 8.6%;">Yếu</th>
+                    <th style="width: 8.6%;">TB</th>
+                    <th style="width: 8.6%;">Giỏi</th>
+                    <th style="width: 8.6%;">Yếu</th>
+                    <th style="width: 8.6%;">TB</th>
+                    <th style="width: 8.6%;">Giỏi</th>
+                </tr>
+                <tr>
+                    <td><strong>Tiếng Phổ thông (Mandarin)</strong></td>
+                    <td><input type="radio" name="lang_mandarin_speak" value="Yếu"></td>
+                    <td><input type="radio" name="lang_mandarin_speak" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_mandarin_speak" value="Giỏi" checked title="Thành thạo - 10 năm sinh sống và làm việc tại Đài Loan"></td>
+                    <td><input type="radio" name="lang_mandarin_read" value="Yếu"></td>
+                    <td><input type="radio" name="lang_mandarin_read" value="Trung bình" checked></td>
+                    <td><input type="radio" name="lang_mandarin_read" value="Giỏi"></td>
+                    <td><input type="radio" name="lang_mandarin_write" value="Yếu"></td>
+                    <td><input type="radio" name="lang_mandarin_write" value="Trung bình" checked></td>
+                    <td><input type="radio" name="lang_mandarin_write" value="Giỏi"></td>
+                </tr>
+                <tr>
+                    <td><strong>Tiếng Quảng</strong></td>
+                    <td><input type="radio" name="lang_cantonese_speak" value="Yếu" checked></td>
+                    <td><input type="radio" name="lang_cantonese_speak" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_cantonese_speak" value="Giỏi"></td>
+                    <td><input type="radio" name="lang_cantonese_read" value="Yếu" checked></td>
+                    <td><input type="radio" name="lang_cantonese_read" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_cantonese_read" value="Giỏi"></td>
+                    <td><input type="radio" name="lang_cantonese_write" value="Yếu" checked></td>
+                    <td><input type="radio" name="lang_cantonese_write" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_cantonese_write" value="Giỏi"></td>
+                </tr>
+                <tr>
+                    <td><strong>Tiếng Anh</strong></td>
+                    <td><input type="radio" name="lang_english_speak" value="Yếu"></td>
+                    <td><input type="radio" name="lang_english_speak" value="Trung bình" checked title="Trình độ B1 - Giao tiếp dịch vụ tốt"></td>
+                    <td><input type="radio" name="lang_english_speak" value="Giỏi"></td>
+                    <td><input type="radio" name="lang_english_read" value="Yếu"></td>
+                    <td><input type="radio" name="lang_english_read" value="Trung bình" checked></td>
+                    <td><input type="radio" name="lang_english_read" value="Giỏi"></td>
+                    <td><input type="radio" name="lang_english_write" value="Yếu"></td>
+                    <td><input type="radio" name="lang_english_write" value="Trung bình" checked></td>
+                    <td><input type="radio" name="lang_english_write" value="Giỏi"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field">
+                            <span>Khác:</span>
+                            <input type="text" name="lang_other_name" value="Tiếng Việt (Bản ngữ)" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td><input type="radio" name="lang_other_speak" value="Yếu"></td>
+                    <td><input type="radio" name="lang_other_speak" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_other_speak" value="Giỏi" checked></td>
+                    <td><input type="radio" name="lang_other_read" value="Yếu"></td>
+                    <td><input type="radio" name="lang_other_read" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_other_read" value="Giỏi" checked></td>
+                    <td><input type="radio" name="lang_other_write" value="Yếu"></td>
+                    <td><input type="radio" name="lang_other_write" value="Trung bình"></td>
+                    <td><input type="radio" name="lang_other_write" value="Giỏi" checked></td>
+                </tr>
+            </table>
+
+            <!-- MỤC 7: KINH NGHIỆM LÀM VIỆC -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell" colspan="4">
+                        7. KINH NGHIỆM LÀM VIỆC
+                        <span style="font-size: 11.5px; font-weight: normal; text-transform: none; display: block;">(Vui lòng liệt kê chi tiết bắt đầu bằng công việc gần đây nhất)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div style="margin-bottom: 6px;">
+                            <strong>Bạn đã từng làm việc ở nước ngoài hoặc Macau chưa? Nếu có vui lòng ghi rõ tên cty ở Macau:</strong>
+                        </div>
+                        <input type="text" name="overseas_experience" value="Đã làm việc 10 năm tại Đài Loan (2014 - 2023) làm Đầu bếp, và 2 năm trên tàu du lịch quốc tế Costa Cruise (2012 - 2014) làm Nhân viên phục vụ bàn." style="font-weight: 500;">
+                        <div style="font-size: 11.5px; color: #555; margin-top: 4px; font-style: italic;">
+                            * Điền kinh nghiệm làm việc 3 nơi gần nhất không phân biệt ở nước ngoài hay ở Việt Nam (lưu ý kinh nghiệm làm việc là điểm cộng cho hồ sơ của bạn)
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- CÔNG TY 1 -->
+                <tr class="sub-header-cell">
+                    <td colspan="4"><strong>(a) THÔNG TIN CÔNG TY THỨ 1 (khai công ty gần nhất)</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="width: 55%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Tên công ty:</strong></span>
+                            <input type="text" name="exp1_company" value="Khách sạn Fusion Suites Saigon (Nhà hàng Fresh)" style="font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="2" style="width: 45%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Kinh doanh về:</strong></span>
+                            <input type="text" name="exp1_business" value="Nhà hàng - Khách sạn 4 sao (Ẩm thực & Dịch vụ)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Địa chỉ công ty:</strong></span>
+                            <input type="text" name="exp1_address" value="Số 3-5 Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh (SĐT: 02839257257)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%;">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Chức vụ:</strong></span>
+                            <input type="text" name="exp1_role" value="Trưởng ca nhà hàng / Senior F&B Attendant" style="font-weight: bold;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                            <span><strong>Thời gian làm việc:</strong></span>
+                            <div class="inline-field">
+                                <span>Từ: Tháng</span>
+                                <input type="text" name="exp1_from_month" value="03" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp1_from_year" value="2025" style="width: 45px; text-align: center;">
+                            </div>
+                            <div class="inline-field">
+                                <span>Đến: Tháng</span>
+                                <input type="text" name="exp1_to_month" value="04" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp1_to_year" value="2026" style="width: 45px; text-align: center;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Lương (VND):</strong></span>
+                            <input type="text" name="exp1_salary" value="6.000.000 VND" style="text-align: right; font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="check-group">
+                            <span><strong>Lý do nghỉ việc:</strong></span>
+                            <label class="check-item"><input type="radio" name="exp1_leave_reason" value="Từ chức" checked> Từ chức</label>
+                            <label class="check-item"><input type="radio" name="exp1_leave_reason" value="Kết thúc hợp đồng"> Kết thúc hợp đồng</label>
+                            <label class="check-item"><input type="radio" name="exp1_leave_reason" value="Bị sa thải"> Bị sa thải</label>
+                            <span style="font-size: 11.5px; color: #555;">(Tìm kiếm môi trường phát triển nghề nghiệp phù hợp năng lực)</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- CÔNG TY 2 -->
+                <tr class="sub-header-cell">
+                    <td colspan="4"><strong>(b) THÔNG TIN CÔNG TY THỨ 2 (khai công ty gần nhất tiếp theo)</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Tên công ty:</strong></span>
+                            <input type="text" name="exp2_company" value="Khách sạn Fusion Suites Saigon" style="font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Kinh doanh về:</strong></span>
+                            <input type="text" name="exp2_business" value="Khách sạn 4 sao (Bộ phận Buồng phòng - Housekeeping)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Địa chỉ công ty:</strong></span>
+                            <input type="text" name="exp2_address" value="Số 3-5 Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh (SĐT: 02839257257)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Chức vụ:</strong></span>
+                            <input type="text" name="exp2_role" value="Nhân viên buồng phòng (Housekeeping Attendant)" style="font-weight: bold;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                            <span><strong>Thời gian làm việc:</strong></span>
+                            <div class="inline-field">
+                                <span>Từ: Tháng</span>
+                                <input type="text" name="exp2_from_month" value="07" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp2_from_year" value="2024" style="width: 45px; text-align: center;">
+                            </div>
+                            <div class="inline-field">
+                                <span>Đến: Tháng</span>
+                                <input type="text" name="exp2_to_month" value="03" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp2_to_year" value="2025" style="width: 45px; text-align: center;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Lương (VND):</strong></span>
+                            <input type="text" name="exp2_salary" value="5.500.000 VND" style="text-align: right; font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="check-group">
+                            <span><strong>Lý do nghỉ việc:</strong></span>
+                            <label class="check-item"><input type="radio" name="exp2_leave_reason" value="Từ chức" checked> Từ chức</label>
+                            <label class="check-item"><input type="radio" name="exp2_leave_reason" value="Kết thúc hợp đồng"> Kết thúc hợp đồng</label>
+                            <label class="check-item"><input type="radio" name="exp2_leave_reason" value="Bị sa thải"> Bị sa thải</label>
+                            <span style="font-size: 11.5px; color: #555;">(Chuyển sang bộ phận F&B để phát triển chuyên môn)</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- CÔNG TY 3 -->
+                <tr class="sub-header-cell">
+                    <td colspan="4"><strong>(c) THÔNG TIN CÔNG TY THỨ 3 (khai công ty gần nhất tiếp theo)</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Tên công ty:</strong></span>
+                            <input type="text" name="exp3_company" value="Nhà hàng Ý tại Đài Loan (Italian Restaurant, Taiwan)" style="font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Kinh doanh về:</strong></span>
+                            <input type="text" name="exp3_business" value="Nhà hàng & Ẩm thực Ý (Bếp & Dịch vụ ăn uống)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Địa chỉ công ty:</strong></span>
+                            <input type="text" name="exp3_address" value="Đài Loan (Taiwan)">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Chức vụ:</strong></span>
+                            <input type="text" name="exp3_role" value="Đầu bếp / Bếp chính (Chef)" style="font-weight: bold;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                            <span><strong>Thời gian làm việc:</strong></span>
+                            <div class="inline-field">
+                                <span>Từ: Tháng</span>
+                                <input type="text" name="exp3_from_month" value="12" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp3_from_year" value="2014" style="width: 45px; text-align: center;">
+                            </div>
+                            <div class="inline-field">
+                                <span>Đến: Tháng</span>
+                                <input type="text" name="exp3_to_month" value="12" style="width: 30px; text-align: center;">
+                                <span>/ Năm</span>
+                                <input type="text" name="exp3_to_year" value="2023" style="width: 45px; text-align: center;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="inline-field" style="width: 100%;">
+                            <span style="white-space: nowrap;"><strong>Lương (VND):</strong></span>
+                            <input type="text" name="exp3_salary" value="22.000.000 VND" style="text-align: right; font-weight: 600;">
+                        </div>
+                    </td>
+                    <td colspan="3">
+                        <div class="check-group">
+                            <span><strong>Lý do nghỉ việc:</strong></span>
+                            <label class="check-item"><input type="radio" name="exp3_leave_reason" value="Từ chức"> Từ chức</label>
+                            <label class="check-item"><input type="radio" name="exp3_leave_reason" value="Kết thúc hợp đồng" checked> Kết thúc hợp đồng</label>
+                            <label class="check-item"><input type="radio" name="exp3_leave_reason" value="Bị sa thải"> Bị sa thải</label>
+                            <span style="font-size: 11.5px; color: #555;">(Hết thời hạn hợp đồng lao động tại nước ngoài và hồi hương)</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- MỤC 8: CAM KẾT & CHỮ KÝ -->
+            <table class="form-table">
+                <tr>
+                    <td class="section-header-cell">
+                        8. CAM KẾT
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="commitment-text">
+                            Tôi xin cam kết mọi thông tin mà tôi ghi trong đơn xin việc này là chính xác và đúng sự thật. Tôi hiểu rằng sau khi được tuyển chọn nếu lời ghi không trung thực tôi sẽ bị công ty cho thôi việc mà không cần thông báo trước hay bồi thường hợp đồng. Đồng thời tôi cũng đồng ý để công ty tìm hiểu những thông tin trên với mục đích xác minh. Tôi đồng ý cho công ty sử dụng thông tin cá nhân của tôi đã điền ở trên cho mục đích tuyển dụng, giới thiệu việc làm và đồng ý cho bên thứ 3 có liên quan xem thông tin của tôi.
+                        </p>
+
+                        <div class="signature-section">
+                            <div class="signature-box">
+                                <div style="font-weight: bold; margin-bottom: 5px;">Ký tên &amp; ghi rõ họ tên:</div>
+                                <div class="canvas-container">
+                                    <canvas id="signaturePad" width="260" height="100"></canvas>
+                                </div>
+                                <div class="canvas-tools">
+                                    <button type="button" class="btn-xs" onclick="clearSignature()">Xóa chữ ký</button>
+                                </div>
+                                <input type="text" name="signature_printed_name" value="NGUYỄN THANH THÁI" style="font-weight: bold; text-align: center; width: 220px; font-size: 14px;">
+                            </div>
+
+                            <div class="signature-box" style="align-items: center; justify-content: flex-start;">
+                                <div style="display: flex; gap: 6px; align-items: baseline; margin-top: 15px;">
+                                    <span>Ngày</span>
+                                    <input type="text" name="sign_day" id="signDay" value="09" style="width: 35px; text-align: center;">
+                                    <span>tháng</span>
+                                    <input type="text" name="sign_month" id="signMonth" value="10" style="width: 35px; text-align: center;">
+                                    <span>năm</span>
+                                    <input type="text" name="sign_year" id="signYear" value="2026" style="width: 50px; text-align: center;">
+                                </div>
+                                <div style="margin-top: 25px; font-style: italic; color: #555;">
+                                    (Người làm đơn ký và ghi rõ họ tên)
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- BOTTOM SUBMISSION BAR -->
+            <div style="text-align: center; margin-top: 30px;" class="toolbar-actions">
+                <button type="button" class="btn btn-primary" style="padding: 12px 30px; font-size: 16px;" onclick="openSubmitModal()">
+                    🚀 NỘP ĐƠN (GỬI ĐẾN LEVANDU1101@GMAIL.COM)
+                </button>
+                <button type="button" class="btn btn-secondary" style="padding: 12px 20px; font-size: 15px;" onclick="window.print()">
+                    🖨️ IN ĐƠN / LƯU PDF
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- SUBMIT MODAL -->
+    <div class="modal-overlay" id="submitModal" onclick="if(event.target === this) closeSubmitModal()">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Xác nhận Nộp Đơn Xin Việc</h3>
+                <button class="modal-close" onclick="closeSubmitModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="statusAlert" class="status-alert"></div>
+
+                <p style="font-size: 13.5px; color: #334155; margin-bottom: 16px;">
+                    Đơn xin việc sẽ được gửi tới email tuyển dụng: <strong style="color: #0284c7;">levandu1101@gmail.com</strong>. Vui lòng chọn phương thức gửi thuận tiện nhất cho bạn:
+                </p>
+
+                <!-- OPTION 1: FormSubmit Online API -->
+                <div class="send-method-card">
+                    <div class="method-info">
+                        <h4>1. Gửi tự động trực tuyến (Khuyên dùng)</h4>
+                        <p>Hệ thống tự động chuyển toàn bộ đơn đến hộp thư levandu1101@gmail.com ngay lập tức.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btnAutoSend" onclick="sendViaFormSubmit()">Gửi ngay</button>
+                </div>
+
+                <!-- OPTION 2: Gmail Web Compose -->
+                <div class="send-method-card">
+                    <div class="method-info">
+                        <h4>2. Mở Gmail Web</h4>
+                        <p>Tự động mở trang soạn thư Gmail với tiêu đề và toàn bộ nội dung đơn được điền sẵn.</p>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="sendViaGmailWeb()">Mở Gmail</button>
+                </div>
+
+                <!-- OPTION 3: Default Mail Client (Mailto) -->
+                <div class="send-method-card">
+                    <div class="method-info">
+                        <h4>3. Ứng dụng Mail (Outlook / Windows Mail)</h4>
+                        <p>Kích hoạt ứng dụng email mặc định trên máy tính của bạn với địa chỉ người nhận có sẵn.</p>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="sendViaMailto()">Mở Mail App</button>
+                </div>
+
+                <!-- OPTION 4: Copy to Clipboard -->
+                <div class="send-method-card">
+                    <div class="method-info">
+                        <h4>4. Sao chép nội dung đơn</h4>
+                        <p>Copy toàn văn nội dung đơn xin việc vào Clipboard để dán vào email hoặc gửi qua Zalo/chat.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="color: #334155; border-color: #cbd5e1;" onclick="copyFormSummary()">Sao chép</button>
+                </div>
+
+                <div style="text-align: right; margin-top: 15px;">
+                    <button type="button" class="btn btn-outline" style="color: #64748b; border: none;" onclick="closeSubmitModal()">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FOR INTERACTION & SUBMISSION -->
+    <script>
+        const RECIPIENT_EMAIL = 'levandu1101@gmail.com';
+
+        // Auto-fill today date
+        const today = new Date();
+        document.getElementById('signDay').value = String(today.getDate()).padStart(2, '0');
+        document.getElementById('signMonth').value = String(today.getMonth() + 1).padStart(2, '0');
+        document.getElementById('signYear').value = today.getFullYear();
+
+        // Photo Upload Handling
+        function handlePhotoUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('applicantPhoto').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Canvas Digital Signature
+        const canvas = document.getElementById('signaturePad');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            e.preventDefault();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getMousePos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            e.preventDefault();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing, { passive: false });
+        canvas.addEventListener('touchmove', draw, { passive: false });
+        window.addEventListener('touchend', stopDrawing);
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Draw initial sample signature
+        function drawInitialSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = 'italic 24px "Brush Script MT", cursive, Georgia, serif';
+            ctx.fillStyle = '#1e3a8a';
+            ctx.fillText('Nguyễn Thanh Thái', 35, 60);
+        }
+        drawInitialSignature();
+
+        // Modal Controls
+        function openSubmitModal() {
+            document.getElementById('statusAlert').className = 'status-alert';
+            document.getElementById('statusAlert').innerText = '';
+            document.getElementById('submitModal').classList.add('active');
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').classList.remove('active');
+        }
+
+        // Collect Form Data into Object
+        function getFormData() {
+            const form = document.getElementById('jobApplicationForm');
+            const data = {};
+            const formData = new FormData(form);
+
+            // Handle multi values
+            for (let [key, val] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(val);
+                    } else {
+                        data[key] = [data[key], val];
+                    }
+                } else {
+                    data[key] = val;
+                }
+            }
+            return data;
+        }
+
+        // Build Structured Email Content
+        function buildSummaryText() {
+            const d = getFormData();
+            const formatArr = (arr) => Array.isArray(arr) ? arr.join(', ') : (arr || 'Không');
+
+            return `Kính gửi: Bộ phận Tuyển dụng,
+
+Tôi xin gửi Đơn xin việc đã hoàn thành với các thông tin chi tiết như sau:
+
+I. THÔNG TIN CÁ NHÂN
+- Họ và tên: ${d.full_name || 'NGUYỄN THANH THÁI'}
+- Họ tên tiếng Hoa: ${d.chinese_name || '阮成泰'}
+- Giới tính: ${d.gender || 'Nam'}
+- Ngày sinh: ${d.dob || '10/12/1988'} | Nơi sinh: ${d.pob || 'Châu Thành, Tiền Giang'}
+- Chiều cao: 1m${d.height_cm || '69'} cm | Cân nặng: ${d.weight_kg || '78'} kg
+- Tình trạng hôn nhân: ${d.marital_status || 'Độc thân'}
+- Quốc tịch: ${d.nationality || 'Việt Nam'} | Dân tộc: ${d.ethnicity || 'Kinh'} | Tôn giáo: ${d.religion || 'Không'}
+- Hình xăm: ${d.has_tattoo || 'Có'} (Vị trí: ${d.tattoo_details || 'Vị trí kín đáo, không lộ'})
+- Tiền sử bệnh/Khuyết tật: ${d.health_disability || 'Không có'}
+- Hộ chiếu (Passport): ${d.passport_number || 'E01983320'} | Ngày cấp: ${d.passport_issue_date || '06/06/2024'} | Hết hạn: ${d.passport_expiry_date || '06/06/2034'} | Nơi cấp: ${d.passport_issue_place || 'Cục Quản lý Xuất nhập cảnh'}
+- Số CMND/CCCD: ${d.id_card_number || '082088016955'} | Ngày cấp: ${d.id_card_issue_date || '10/12/2021'} | Nơi cấp: ${d.id_card_issue_place || 'Cục Cảnh sát QLHC về TTXH'}
+- Địa chỉ thường trú: ${d.permanent_address || 'Số 13, Ấp Vĩnh Hòa, Xã Vĩnh Kim, Huyện Châu Thành, Tỉnh Tiền Giang'}
+- Địa chỉ liên hệ: ${d.contact_address || '110/13 Đường Trường Sa, Phường Gia Định, TP. Hồ Chí Minh'}
+- Số điện thoại di động: ${d.mobile_phone || '0848853959'}
+- Email: ${d.email || 'ryann1696@gmail.com'}
+
+II. NGUỒN TUYỂN DỤNG & VỊ TRÍ ỨNG TUYỂN
+- Nguồn biết tin tuyển dụng: ${formatArr(d.recruit_source)}
+- Vị trí ứng tuyển: ${formatArr(d.applied_position)} (Vị trí khác: ${d.applied_position_other || 'N/A'})
+
+III. LIÊN HỆ KHẨN CẤP
+- Người liên hệ khẩn cấp: ${d.emergency_name_4 || 'LÊ VĂN DU'} (${d.emergency_rel_other_desc || 'Bạn bè'})
+  + Địa chỉ: ${d.emergency_address_4 || '110/13 Đường Trường Sa, Phường Gia Định, TP. Hồ Chí Minh'}
+  + Điện thoại: ${d.emergency_phone_4 || '0772113087'}
+- Giới thiệu bạn bè biết ngoại ngữ: ${d.ref_friend_name_1 || 'LÊ VĂN DU'} (${d.ref_friend_phone_1 || '0772113087'}) - Tiếng Anh
+
+IV. HỌC VẤN & NGOẠI NGỮ
+- Học vấn cao nhất: ${d.edu_school_1 || 'Trường THPT Rạch Gầm Xoài Mút'} (${d.edu_from_1 || '2005'} - ${d.edu_to_1 || '2009'}) - ${d.edu_degree_1 || 'Bằng Tốt nghiệp THPT'}
+- Đào tạo nghiệp vụ: ${d.edu_school_2 || 'Trường DL&KS Saigontourist'} (${d.edu_from_2 || '2009'} - ${d.edu_to_2 || '2011'})
+- Khả năng ngoại ngữ:
+  + Tiếng Phổ thông (Mandarin): Nghe nói: ${d.lang_mandarin_speak || 'Giỏi'}, Đọc: ${d.lang_mandarin_read || 'Trung bình'}, Viết: ${d.lang_mandarin_write || 'Trung bình'} (10 năm kinh nghiệm tại Đài Loan)
+  + Tiếng Anh: Nghe nói: ${d.lang_english_speak || 'Trung bình'}, Đọc: ${d.lang_english_read || 'Trung bình'}, Viết: ${d.lang_english_write || 'Trung bình'}
+  + Tiếng Quảng: Nghe nói: ${d.lang_cantonese_speak || 'Yếu'}, Đọc: ${d.lang_cantonese_read || 'Yếu'}, Viết: ${d.lang_cantonese_write || 'Yếu'}
+
+V. KINH NGHIỆM LÀM VIỆC
+- Kinh nghiệm làm việc ở nước ngoài: ${d.overseas_experience}
+1. ${d.exp1_company} (Từ ${d.exp1_from_month}/${d.exp1_from_year} đến ${d.exp1_to_month}/${d.exp1_to_year})
+   - Chức vụ: ${d.exp1_role}
+   - Mức lương: ${d.exp1_salary} | Lý do nghỉ: ${d.exp1_leave_reason}
+2. ${d.exp2_company} (Từ ${d.exp2_from_month}/${d.exp2_from_year} đến ${d.exp2_to_month}/${d.exp2_to_year})
+   - Chức vụ: ${d.exp2_role}
+   - Mức lương: ${d.exp2_salary} | Lý do nghỉ: ${d.exp2_leave_reason}
+3. ${d.exp3_company} (Từ ${d.exp3_from_month}/${d.exp3_from_year} đến ${d.exp3_to_month}/${d.exp3_to_year})
+   - Chức vụ: ${d.exp3_role}
+   - Mức lương: ${d.exp3_salary} | Lý do nghỉ: ${d.exp3_leave_reason}
+
+VI. CAM KẾT
+Tôi xin cam kết mọi thông tin trên là chính xác và hoàn toàn đúng sự thật.
+Người nộp đơn: ${d.signature_printed_name || 'NGUYỄN THANH THÁI'}
+Ngày ký: Ngày ${d.sign_day} tháng ${d.sign_month} năm ${d.sign_year}
+`;
+        }
+
+        // Send via FormSubmit API
+        async function sendViaFormSubmit() {
+            const alertBox = document.getElementById('statusAlert');
+            const btn = document.getElementById('btnAutoSend');
+            const data = getFormData();
+            data._subject = `[ĐƠN XIN VIỆC] Ứng viên NGUYỄN THANH THÁI - Vị trí: ${Array.isArray(data.applied_position) ? data.applied_position.join(', ') : data.applied_position || 'Phục vụ nhà hàng'}`;
+            data._replyto = data.email || 'ryann1696@gmail.com';
+            data._template = 'table';
+            data['Noi_dung_don_chi_tiet'] = buildSummaryText();
+
+            btn.disabled = true;
+            btn.innerText = 'Đang gửi...';
+            alertBox.className = 'status-alert';
+            alertBox.style.display = 'none';
+
+            try {
+                const res = await fetch(`https://formsubmit.co/ajax/${RECIPIENT_EMAIL}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+                if (res.ok || result.success === "true") {
+                    alertBox.className = 'status-alert success';
+                    alertBox.innerText = `✅ Đơn xin việc đã được gửi thành công đến ${RECIPIENT_EMAIL}!`;
+                } else {
+                    throw new Error(result.message || 'Lỗi gửi trực tuyến');
+                }
+            } catch (err) {
+                alertBox.className = 'status-alert error';
+                alertBox.innerHTML = `⚠️ Dịch vụ gửi trực tiếp tạm thời bận hoặc yêu cầu kết nối mạng. Bạn hãy chọn <strong>"2. Mở Gmail Web"</strong> hoặc <strong>"3. Ứng dụng Mail"</strong> để gửi ngay lập tức tới ${RECIPIENT_EMAIL}!`;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Gửi lại';
+            }
+        }
+
+        // Send via Mailto
+        function sendViaMailto() {
+            const subject = encodeURIComponent(`[ĐƠN XIN VIỆC] Ứng viên NGUYỄN THANH THÁI - Vị trí Phục vụ nhà hàng`);
+            const body = encodeURIComponent(buildSummaryText());
+            window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+        }
+
+        // Send via Gmail Web
+        function sendViaGmailWeb() {
+            const subject = encodeURIComponent(`[ĐƠN XIN VIỆC] Ứng viên NGUYỄN THANH THÁI - Vị trí Phục vụ nhà hàng`);
+            const body = encodeURIComponent(buildSummaryText());
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${RECIPIENT_EMAIL}&su=${subject}&body=${body}`;
+            window.open(gmailUrl, '_blank');
+        }
+
+        // Copy summary to clipboard
+        function copyFormSummary() {
+            const text = buildSummaryText();
+            navigator.clipboard.writeText(text).then(() => {
+                const alertBox = document.getElementById('statusAlert');
+                alertBox.className = 'status-alert success';
+                alertBox.innerText = '📋 Đã sao chép toàn bộ nội dung đơn xin việc vào Clipboard!';
+            }).catch(() => {
+                alert('Không thể tự động sao chép. Vui lòng thử lại!');
+            });
+        }
+
+        // Reset to blank form
+        function resetFormToBlank() {
+            if (!confirm('Bạn có chắc chắn muốn xóa toàn bộ thông tin để điền đơn mới từ đầu không?')) return;
+            const form = document.getElementById('jobApplicationForm');
+            form.reset();
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(i => {
+                if (i.id !== 'signDay' && i.id !== 'signMonth' && i.id !== 'signYear') {
+                    i.value = '';
+                }
+            });
+            clearSignature();
+        }
+
+        // Reload prefilled data
+        function loadPrefilledData() {
+            window.location.reload();
+        }
+
+        // Export standalone filled HTML
+        function exportFilledHTML() {
+            const clone = document.documentElement.cloneNode(true);
+            const blob = new Blob([clone.outerHTML], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Don_Xin_Viec_Nguyen_Thanh_Thai_Da_Dien.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
